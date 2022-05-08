@@ -35,7 +35,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation("Error occurred while GetProducts API.");
+               
                 //log error
                 return StatusCode(500, ex.Message);
             }
@@ -48,7 +48,7 @@ namespace API.Controllers
             {
                 _logger.LogInformation($"Invoking the GetProducts By ID API Function with Id={id}");
 
-                var spec = new ProductWithTypeAndBrandSpecification();
+                var spec = new ProductWithTypeAndBrandSpecification(id);
 
                 var product = await _genericPersistenceLayer.GetEntity(spec);
 
