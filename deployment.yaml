@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomstore
+spec:
+  selector:
+    matchLabels:
+      app: ecomstore-pod
+  template:
+    metadata:
+      labels:
+        app: ecomstore-pod
+    spec:
+      containers:
+      - name: ecomstore-api-container
+        image: groovecoding7/api:1.0.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
