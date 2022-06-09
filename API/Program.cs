@@ -5,9 +5,20 @@ using Infrastructure.RepositoriesContexts;
 using Infrastructure.RepositoryContexts;
 using Microsoft.EntityFrameworkCore;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 Logger.Initialize(builder.Services);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins().AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
+});
 
 builder.Services.AddDbContext<DbEntityFrameworkContext>(x => x.UseSqlite(builder.Configuration.GetConnectionString("SqlConnection")));
 builder.Host.ConfigureLogging(l => { l.ClearProviders(); l.AddConsole(); });
@@ -35,6 +46,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 

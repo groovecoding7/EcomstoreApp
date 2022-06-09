@@ -1,0 +1,48 @@
+﻿@page "/fetchdata"
+@using Core.Entities
+@using System.Text.Json
+@inject HttpClient Http
+
+<PageTitle>Groton Valley Traders</PageTitle>
+
+<h1>Product List</h1>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Product Image</th>
+                <th>Product Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.PictureUrl</td>
+                    <td>@product.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private IEnumerable<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await Http.GetFromJsonAsync<IEnumerable<Product>>("https://localhost:5001/api/products");
+    }
+
+}

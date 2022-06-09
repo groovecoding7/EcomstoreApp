@@ -1,12 +1,12 @@
-using System.Diagnostics;
+using System.Web.Http.Cors;
 using Core.Entities;
 using Core.Specifications;
 using Infrastructure;
-using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase

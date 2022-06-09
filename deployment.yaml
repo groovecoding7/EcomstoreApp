@@ -2,11 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ecomstore
+  
 spec:
   selector:
     matchLabels:
       app: ecomstore-pod
-  template:
+    template:
     metadata:
       labels:
         app: ecomstore-pod
